@@ -1,24 +1,26 @@
 #include <iostream>
-#include "Pair.hpp"
+#include "Info.hpp"
 // Default Constructor
-Pair::Pair()
-{
+Info::Info(){
     this->value = 0;
     this->key = -1;
 }
 // Constructor with parameters
-Pair::Pair(int value, int key)
-{
+Info::Info(int value, int key,bool isValid){
     this->value = value;
     this->key = key;
+    this->isValid = isValid;
 }
 // get The value of the Pair
-int Pair::first()
-{
+int Info::getValue(){
     return this->value;
 }
 // get the key of the Pair
-int Pair::second()
-{
+int Info::getKey(){
     return this->key;
+}
+
+//get the validity of the info 
+bool Info::getIsValid(){
+    return this->isValid;
 }
