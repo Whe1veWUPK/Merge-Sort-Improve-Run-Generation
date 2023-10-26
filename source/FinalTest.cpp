@@ -1,6 +1,6 @@
 #include<chrono>
 #include<iostream>
-#include<thread>
+#include "mingw.thread.h"
 #include "LoserTree.hpp"
 #include "FileOperator.hpp"
 //Thread 1: read data from the disk
@@ -27,6 +27,7 @@ void writeToDisk(Buffer*outputBuffer,FileOperator*FileOperator,bool isFirst,int 
     //write the buffer's data to disk
     FileOperator->writeToFile(filePath, predictSize, isFirst, outputBuffer);
 }
+
 void startSort(){
     // set the bufferSize
     std::cout << "Please input the buffer's size\n";
@@ -52,11 +53,11 @@ void startSort(){
     LoserTree *loserTree = new LoserTree(tempBuffer.buffer, treeSize);
     //update curLocation
     curLocation += treeSize;
-    thread t1(startSort);
+    
 
 }
 int main(){
-    startSort();
+    
     system("pause");
     return 0;
 }
