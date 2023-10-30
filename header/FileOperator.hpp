@@ -1,13 +1,12 @@
-#ifndef FILEOPERATOR_HPP
-#define FILEOPERATOR_HPP
+#pragma once
 #include "Buffer.hpp"
-class FileOperator{
+class FileOperator {
 public:
-    void writeToInputBuffer(std::string filepath,int predictSize,int startPosition,Buffer*inputBuffer);  //å°†æ–‡ä»¶ä¸­é¢„æµ‹é‡çš„æ•°æ®ä»æŸä¸€ä½ç½®å¼€å§‹è¯»å–åˆ°inputBufferä¸­
-    void writeToFile(std::string filepath,int predictSize,bool isFirst,Buffer*outputBuffer); //å°†outputBufferä¸­çš„é¢„æµ‹é‡çš„æ•°æ®å†™å…¥åˆ°è¾“å‡ºæ–‡ä»¶ä¸­
-    void updateInputFile(std::string outputPath,std::string inputPath); //ä¸€è½®è¿è¡Œå®Œæ¯•å å°†è¾“å…¥æ–‡ä»¶çš„æ•°æ®è¿›è¡Œæ›´æ–°
-    void createInitialRuns(std::string filepath,std::string outputPath, int runSize,Buffer*inputBuffer);//ç”Ÿæˆåˆå§‹çš„run
-    int getDataSize(std::string filepath);//è·å–æ–‡ä»¶ä¸­çš„æ•°æ®æ€»é‡
+    FileOperator();//Ä¬ÈÏ¹¹Ôìº¯Êı
+    FileOperator(const FileOperator&f);
+    void writeToInputBuffer(std::string filepath, int predictSize, int startPosition, Buffer* inputBuffer);  //½«ÎÄ¼şÖĞÔ¤²âÁ¿µÄÊı¾İ´ÓÄ³Ò»Î»ÖÃ¿ªÊ¼¶ÁÈ¡µ½inputBufferÖĞ
+    void writeToFile(std::string filepath, int predictSize, bool isFirst, Buffer* outputBuffer); //½«outputBufferÖĞµÄÔ¤²âÁ¿µÄÊı¾İĞ´Èëµ½Êä³öÎÄ¼şÖĞ
+    void updateInputFile(std::string outputPath, std::string inputPath); //update the input data
+    void createInitialRuns(std::string filepath, std::string outputPath, int runSize, Buffer* inputBuffer);//generate initial runs
+    int getDataSize(std::string filepath);//get the data size in the disk
 };
-
-#endif

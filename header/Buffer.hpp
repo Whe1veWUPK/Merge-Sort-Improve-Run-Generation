@@ -1,30 +1,28 @@
-#ifndef BUFFER_HPP
-#define BUFFER_HPP
-class Buffer{
+#pragma once
+class Buffer {
 private:
-    int bufferSize; // bufferçš„sizeå¤§å°
-    int curLocation; // buffer æ­¤æ—¶å¤„ç†åˆ°çš„ä½ç½®
-    int curSize; //æ­¤æ—¶bufferé‡Œé¢å­˜æ”¾çš„æ•°æ®é‡
-    bool isFull; //æ­¤æ—¶bufferçš„çŠ¶æ€ æ˜¯å¦ä¸ºæ»¡
-    bool isEmpty; //æ­¤æ—¶bufferçš„çŠ¶æ€ æ˜¯å¦ä¸ºç©º
+    int bufferSize; // bufferµÄsize´óĞ¡
+    int curLocation; // buffer ´ËÊ±´¦Àíµ½µÄÎ»ÖÃ
+    int curSize; //´ËÊ±bufferÀïÃæ´æ·ÅµÄÊı¾İÁ¿
+    bool isFull; //´ËÊ±bufferµÄ×´Ì¬ ÊÇ·ñÎªÂú
+    bool isEmpty; //´ËÊ±bufferµÄ×´Ì¬ ÊÇ·ñÎª¿Õ
 
 public:
-    int *buffer;//å®é™…çš„buffer
-    Buffer(int bufferSize); //Bufferçš„æ„é€ å‡½æ•°
-    Buffer(); //Bufferçš„é»˜è®¤æ„é€ å‡½æ•°
-    int getBufferSize(); //bufferSize çš„ getå‡½æ•°
-    int getCurLocation();  //curLocation çš„ get å‡½æ•°
-    int getCurSize(); //curSize çš„ get å‡½æ•°
-    void setBufferSize(int bufferSize); // bufferSize çš„ set å‡½æ•°
-    void setCurLoation(int curLocation); // curLocation çš„ set å‡½æ•°
-    void setCurSize(int curSize); // curSize çš„ set å‡½æ•°
-    void moveCurPos();//æ›´æ–°curPosçš„å‡½æ•° æ¯æ¬¡æ›´æ–°1
-    void append(int index, int value);// Buffer æ’å…¥çš„å‡½æ•° å†…å«æ›´æ–° emptyçŠ¶æ€ fullçŠ¶æ€
-    void resize(int resize);//é‡ç½®Bufferå®¹é‡ çš„å‡½æ•°
-    void quickSort(int left,int right);//å¯¹Buffer å†…éƒ¨çš„æ•°æ®è¿›è¡Œå¿«é€Ÿæ’åº æ—¶é—´å¤æ‚åº¦ä¸º T(n)=O(nlogn)
-    bool Full(); //æŸ¥è¯¢ bufferçš„çŠ¶æ€ æ˜¯å¦ä¸ºæ»¡
-    bool Empty(); //æŸ¥è¯¢ bufferçš„çŠ¶æ€ æ˜¯å¦ä¸ºç©º
-    bool isOver(); // æŸ¥è¯¢å½“å‰bufferæ˜¯å¦å·²ç»å®ŒæˆMerge
+    int* buffer;//Êµ¼ÊµÄbuffer
+    Buffer(int bufferSize); //BufferµÄ¹¹Ôìº¯Êı
+    Buffer(); //BufferµÄÄ¬ÈÏ¹¹Ôìº¯Êı
+    Buffer(const Buffer&b);//Buffer µÄ¿½±´¹¹Ôìº¯Êı
+    int getBufferSize(); //bufferSize µÄ getº¯Êı
+    int getCurLocation();  //curLocation µÄ get º¯Êı
+    int getCurSize(); //curSize µÄ get º¯Êı
+    void setBufferSize(int bufferSize); // bufferSize µÄ set º¯Êı
+    void setCurLoation(int curLocation); // curLocation µÄ set º¯Êı
+    void setCurSize(int curSize); // curSize µÄ set º¯Êı
+    void moveCurPos();//¸üĞÂcurPosµÄº¯Êı Ã¿´Î¸üĞÂ1
+    void append(int index, int value);// Buffer ²åÈëµÄº¯Êı ÄÚº¬¸üĞÂ empty×´Ì¬ full×´Ì¬
+    void resize(int resize);//ÖØÖÃBufferÈİÁ¿ µÄº¯Êı
+    void quickSort(int left, int right);//¶ÔBuffer ÄÚ²¿µÄÊı¾İ½øĞĞ¿ìËÙÅÅĞò Ê±¼ä¸´ÔÓ¶ÈÎª T(n)=O(nlogn)
+    bool Full(); //²éÑ¯ bufferµÄ×´Ì¬ ÊÇ·ñÎªÂú
+    bool Empty(); //²éÑ¯ bufferµÄ×´Ì¬ ÊÇ·ñÎª¿Õ
+    bool isOver(); // ²éÑ¯µ±Ç°bufferÊÇ·ñÒÑ¾­Íê³ÉMerge
 };
-
-#endif

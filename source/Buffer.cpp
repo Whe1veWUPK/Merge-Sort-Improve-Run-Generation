@@ -1,17 +1,17 @@
 #include <iostream>
 #include "Buffer.hpp"
-Buffer::Buffer(){
-    //Bufferçš„æ— å‚æ„é€ å‡½æ•°
+Buffer::Buffer() {
+    //BufferµÄÎŞ²Î¹¹Ôìº¯Êı
     this->setBufferSize(10);
     this->setCurLoation(0);
     this->setCurSize(0);
     this->isFull = false;
     this->isEmpty = true;
     this->buffer = new int[this->bufferSize];
-    
+
 }
-Buffer::Buffer(int bufferSize){
-    //Bufferçš„æ„é€ å‡½æ•°
+Buffer::Buffer(int bufferSize) {
+    //BufferµÄ¹¹Ôìº¯Êı
     this->setBufferSize(bufferSize);
     this->setCurLoation(0);
     this->setCurSize(0);
@@ -19,41 +19,52 @@ Buffer::Buffer(int bufferSize){
     this->isEmpty = true;
     this->buffer = new int[this->bufferSize];
 }
-void Buffer::moveCurPos(){
-    //æ›´æ–°curPosçš„å‡½æ•°
+Buffer::Buffer(const Buffer& b) {
+    this->bufferSize = b.bufferSize;
+    this->curLocation = b.curLocation;
+    this->curSize = b.curSize;
+    this->isEmpty = b.isEmpty;
+    this->isFull = b.isFull;
+    this->resize(this->curSize);
+    for (int i = 0; i < this->bufferSize; ++i) {
+        this->buffer[i] = b.buffer[i];
+    }
+}
+void Buffer::moveCurPos() {
+    //¸üĞÂcurPosµÄº¯Êı
     this->curLocation += 1;
 }
-int Buffer::getBufferSize(){
+int Buffer::getBufferSize() {
     return this->bufferSize;
 }
-int Buffer::getCurLocation(){
+int Buffer::getCurLocation() {
     return this->curLocation;
 }
-int Buffer::getCurSize(){
+int Buffer::getCurSize() {
     return this->curSize;
 }
-void Buffer::setBufferSize(int bufferSize){
+void Buffer::setBufferSize(int bufferSize) {
     this->bufferSize = bufferSize;
 }
-void Buffer::setCurLoation(int curLocation){
+void Buffer::setCurLoation(int curLocation) {
     this->curLocation = curLocation;
 }
-void Buffer::setCurSize(int curSize){
+void Buffer::setCurSize(int curSize) {
     this->curSize = curSize;
 }
-void Buffer::append(int index,int value){
-    //å‘buffer é‡Œ æ’å…¥æ•°æ® çš„å‡½æ•°
+void Buffer::append(int index, int value) {
+    //Ïòbuffer Àï ²åÈëÊı¾İ µÄº¯Êı
     this->buffer[index] = value;
     ++this->curSize;
-    if(this->curSize > 0){
+    if (this->curSize > 0) {
         this->isEmpty = false;
     }
-    if(this->curSize == this->bufferSize){
+    if (this->curSize == this->bufferSize) {
         this->isFull = true;
     }
 }
-void Buffer::resize(int resize){
-    //é‡æ–°è®¾å®š buffer çš„ size åº”åœ¨æ¯ä¸€è½®ç»“æŸåä½¿ç”¨
+void Buffer::resize(int resize) {
+    //ÖØĞÂÉè¶¨ buffer µÄ size Ó¦ÔÚÃ¿Ò»ÂÖ½áÊøºóÊ¹ÓÃ
     this->bufferSize = resize;
     this->buffer = new int[this->bufferSize];
     this->isEmpty = true;
@@ -61,40 +72,40 @@ void Buffer::resize(int resize){
     this->curSize = 0;
     this->curLocation = 0;
 }
-void Buffer::quickSort(int left,int right){
-    //å¿«é€Ÿæ’åº
-    if (left< right){      
-		int i = left, j = right, x = this->buffer[left];
-		while (i < j){
-			while(i < j &&this->buffer[j]>= x) // ä»å³å‘å·¦æ‰¾ç¬¬ä¸€ä¸ªå°äºxçš„æ•°
-				j--; 
-			if(i < j)
-				this->buffer[i++] =this->buffer[j];
-			while(i < j && this->buffer[i]< x) // ä»å·¦å‘å³æ‰¾ç¬¬ä¸€ä¸ªå¤§äºç­‰äºxçš„æ•°
-				i++; 
-			if(i < j)
-				this->buffer[j--] = this->buffer[i];
-		}
-		this->buffer[i] = x;
-		this->quickSort( left, i - 1); // é€’å½’è°ƒç”¨
-		this->quickSort( i + 1, right);
-	}
+void Buffer::quickSort(int left, int right) {
+    //¿ìËÙÅÅĞò
+    if (left < right) {
+        int i = left, j = right, x = this->buffer[left];
+        while (i < j) {
+            while (i < j && this->buffer[j] >= x) // ´ÓÓÒÏò×óÕÒµÚÒ»¸öĞ¡ÓÚxµÄÊı
+                j--;
+            if (i < j)
+                this->buffer[i++] = this->buffer[j];
+            while (i < j && this->buffer[i] < x) // ´Ó×óÏòÓÒÕÒµÚÒ»¸ö´óÓÚµÈÓÚxµÄÊı
+                i++;
+            if (i < j)
+                this->buffer[j--] = this->buffer[i];
+        }
+        this->buffer[i] = x;
+        this->quickSort(left, i - 1); // µİ¹éµ÷ÓÃ
+        this->quickSort(i + 1, right);
+    }
 
 }
-bool Buffer::Full(){
-    //åˆ¤æ–­ bufferæ˜¯å¦ä¸ºæ»¡
+bool Buffer::Full() {
+    //ÅĞ¶Ï bufferÊÇ·ñÎªÂú
     return this->isFull;
 }
-bool Buffer::Empty(){
-    //åˆ¤æ–­ bufferæ˜¯å¦ä¸ºç©º
+bool Buffer::Empty() {
+    //ÅĞ¶Ï bufferÊÇ·ñÎª¿Õ
     return this->isEmpty;
 }
-bool Buffer::isOver(){
-    //æŸ¥è¯¢å½“å‰bufferæ˜¯å¦å·²ç»Merge Over
-    if(this->curLocation>=this->curSize){
+bool Buffer::isOver() {
+    //²éÑ¯µ±Ç°bufferÊÇ·ñÒÑ¾­Merge Over
+    if (this->curLocation >= this->curSize) {
         return true;
     }
-    else{
+    else {
         return false;
     }
 }

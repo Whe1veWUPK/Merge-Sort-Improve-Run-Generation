@@ -2,133 +2,138 @@
 #include<fstream>
 #include<sstream>
 #include "FileOperator.hpp"
+FileOperator::FileOperator() {
 
-void FileOperator::writeToInputBuffer(std::string filepath,int predictSize,int startPostion,Buffer*inputBuffer){
-    // å°†é¢„æµ‹å¤§å°çš„æ•°æ®é‡å†™å…¥åˆ° ç»™å®šçš„ inputBufferä¸­
+}
+FileOperator::FileOperator(const FileOperator&f) {
+
+}
+void FileOperator::writeToInputBuffer(std::string filepath, int predictSize, int startPostion, Buffer* inputBuffer) {
+    // ½«Ô¤²â´óĞ¡µÄÊı¾İÁ¿Ğ´Èëµ½ ¸ø¶¨µÄ inputBufferÖĞ
     int bufferSize = inputBuffer->getBufferSize();
-    // å¦‚æœé¢„æµ‹å¤§å°ä¸å®é™…æä¾›çš„ bufferå¤§å°ä¸åŒ  åˆ™è¾“å‡ºé”™è¯¯ä¿¡æ¯
-    if(bufferSize<predictSize){
+    // Èç¹ûÔ¤²â´óĞ¡ÓëÊµ¼ÊÌá¹©µÄ buffer´óĞ¡²»Í¬  ÔòÊä³ö´íÎóĞÅÏ¢
+    if (bufferSize < predictSize) {
         std::cerr << "The input buffer size is not enough !"
-                  << "\n";
-        std::cerr  << "Predict Size is: " << predictSize << " Current Size is: " << bufferSize << "\n";
+            << "\n";
+        std::cerr << "Predict Size is: " << predictSize << " Current Size is: " << bufferSize << "\n";
     }
-    std::fstream fin(filepath,std::ios::in);
-    // å¦‚æœæ–‡ä»¶æ— æ³•æ‰“å¼€åˆ™è¾“å‡ºé”™è¯¯ä¿¡æ¯
-    if(!fin.is_open()){
+    std::fstream fin(filepath, std::ios::in);
+    // Èç¹ûÎÄ¼şÎŞ·¨´ò¿ªÔòÊä³ö´íÎóĞÅÏ¢
+    if (!fin.is_open()) {
         std::cerr << "The file: " << filepath << " can not be opened"
-                  << "\n";
+            << "\n";
     }
     std::string line;
     int curPostion = 0;
     int readSize = 0;
-    while(std::getline(fin,line)){
+    while (std::getline(fin, line)) {
         std::istringstream iss(line);
-        if(curPostion<startPostion){
+        if (curPostion < startPostion) {
             ++curPostion;
         }
-        else{
-            if(readSize>=predictSize){
-                //å¦‚æœå·²ç»è¯»åˆ°é¢„æœŸSizeçš„å¤§å° åˆ™ç›´æ¥é€€å‡º
+        else {
+            if (readSize >= predictSize) {
+                //Èç¹ûÒÑ¾­¶Áµ½Ô¤ÆÚSizeµÄ´óĞ¡ ÔòÖ±½ÓÍË³ö
                 break;
             }
-            else{
+            else {
                 int n;
                 iss >> n;
-                inputBuffer->append(readSize,n);
+                inputBuffer->append(readSize, n);
                 ++readSize;
             }
         }
     }
     fin.close();
 }
-void FileOperator::writeToFile(std::string filepath,int predictSize,bool isFirst,Buffer*outputBuffer){
+void FileOperator::writeToFile(std::string filepath, int predictSize, bool isFirst, Buffer* outputBuffer) {
     int bufferSize = outputBuffer->getBufferSize();
-    // å¦‚æœé¢„æµ‹å¤§å°ä¸å®é™…æä¾›çš„ bufferå¤§å°ä¸åŒ  åˆ™è¾“å‡ºé”™è¯¯ä¿¡æ¯
-    if(bufferSize>predictSize){
-        std::cerr << "The output buffer size is bigger than predict !"
-                  << "\n";
+    // Èç¹ûÔ¤²â´óĞ¡ÓëÊµ¼ÊÌá¹©µÄ buffer´óĞ¡²»Í¬  ÔòÊä³ö´íÎóĞÅÏ¢
+    if ( predictSize>bufferSize) {
+        std::cerr << "The predict size is bigger than the buffer's size !"
+            << "\n";
         std::cerr << "Predict Size is: " << predictSize << " Current Size is: " << bufferSize << "\n";
     }
     std::fstream fout;
-    if(isFirst){
-        //å¦‚æœæ˜¯æŸä¸€è½®æ¬¡çš„ç¬¬ä¸€ä¸ª outputBufferè¾“å‡º åˆ™é‡å†™æ–‡æ¡£
+    if (isFirst) {
+        //Èç¹ûÊÇÄ³Ò»ÂÖ´ÎµÄµÚÒ»¸ö outputBufferÊä³ö ÔòÖØĞ´ÎÄµµ
         fout.open(filepath, std::ios::out);
     }
-    else{
-        //å¦‚æœä¸æ˜¯ åˆ™ç»­å†™æ–‡æ¡£
+    else {
+        //Èç¹û²»ÊÇ ÔòĞøĞ´ÎÄµµ
         fout.open(filepath, std::ios::out | std::ios::app);
     }
-    // å¦‚æœæ–‡ä»¶æ— æ³•æ‰“å¼€åˆ™è¾“å‡ºé”™è¯¯ä¿¡æ¯
-    if(!fout.is_open()){
+    // Èç¹ûÎÄ¼şÎŞ·¨´ò¿ªÔòÊä³ö´íÎóĞÅÏ¢
+    if (!fout.is_open()) {
         std::cerr << "The file: " << filepath << " can not be opened"
-                  << "\n"; 
+            << "\n";
     }
     std::ostringstream oss;
-    for (int i = 0; i < predictSize;++i){
+    for (int i = 0; i < predictSize; ++i) {
         oss << outputBuffer->buffer[i] << "\n";
     }
 
     std::string outString = oss.str();
-    //å°†ä¿¡æ¯è¾“å‡ºåˆ°æ–‡ä»¶ä¸­
+    //½«ĞÅÏ¢Êä³öµ½ÎÄ¼şÖĞ
     fout << outString;
     fout.close();
 }
 
-void FileOperator::updateInputFile(std::string outputPath,std::string inputPath){
-    //å½“ä¸€è½®æ¬¡ç»“æŸå å°†inputæ–‡æ¡£è¿›è¡Œæ›´æ–°
+void FileOperator::updateInputFile(std::string outputPath, std::string inputPath) {
+    //µ±Ò»ÂÖ´Î½áÊøºó ½«inputÎÄµµ½øĞĞ¸üĞÂ
     std::fstream fin(outputPath, std::ios::in);
     std::fstream fout(inputPath, std::ios::out);
-    if(!fin.is_open()){
+    if (!fin.is_open()) {
         std::cerr << "The File: " << outputPath << " can not be opened"
-                  << "\n";
-        
+            << "\n";
+
     }
-    if(!fout.is_open()){
+    if (!fout.is_open()) {
         std::cerr << "The File: " << inputPath << " can not be opened"
-                  << "\n";        
+            << "\n";
     }
 
     std::string line;
-    while(std::getline(fin, line)){
-        fout << (line+"\n");
+    while (std::getline(fin, line)) {
+        fout << (line + "\n");
     }
-   
+
     fin.close();
     fout.close();
 }
-void FileOperator::createInitialRuns(std::string filepath,std::string outputPath,int runSize,Buffer*inputBuffer){
+void FileOperator::createInitialRuns(std::string filepath, std::string outputPath, int runSize, Buffer* inputBuffer) {
     int curPos = 0;
     int dataSize = this->getDataSize(filepath);
     bool isFirst = true;
-    while(curPos<dataSize){
-        //è¯»å–åˆ° inputBuffer é‡Œé¢
+    while (curPos < dataSize) {
+        //¶ÁÈ¡µ½ inputBuffer ÀïÃæ
         this->writeToInputBuffer(filepath, runSize, curPos, inputBuffer);
-        //æ›´æ–°åæ ‡
+        //¸üĞÂ×ø±ê
         curPos += inputBuffer->getCurSize();
-        //æ’åº
+        //ÅÅĞò
         inputBuffer->quickSort(0, inputBuffer->getCurSize() - 1);
-        //å†™åˆ°æ–‡ä»¶ä¸­å»
+        //Ğ´µ½ÎÄ¼şÖĞÈ¥
         this->writeToFile(outputPath, inputBuffer->getCurSize(), isFirst, inputBuffer);
-        //æ›´æ–°isFirst
+        //¸üĞÂisFirst
         isFirst = false;
-        //é‡ç½®buffer
+        //ÖØÖÃbuffer
         inputBuffer->resize(runSize);
     }
-    //æ›´æ–°æ–‡æ¡£
+    //¸üĞÂÎÄµµ
     this->updateInputFile(outputPath, filepath);
 }
-int FileOperator::getDataSize(std::string filepath){
+int FileOperator::getDataSize(std::string filepath) {
     std::fstream fin(filepath, std::ios::in);
-    if(!fin.is_open()){
+    if (!fin.is_open()) {
         std::cerr << "The File: " << filepath << " can not be opened"
-                  << "\n";
+            << "\n";
     }
     std::string line;
-    
-    
+
+
     int size = 0;
-    
-    while(std::getline(fin, line)){
+
+    while (std::getline(fin, line)) {
         ++size;
     }
     fin.close();
