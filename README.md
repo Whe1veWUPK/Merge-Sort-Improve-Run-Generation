@@ -11,8 +11,8 @@
 * Timer.cpp 封装的Chrono计时器，记录程序运行时间
 * FinalTest.cpp 程序入口，输入BufferSize 和 LoserTree's Size开始测试
 ## 使用说明
-* 首先运行$DataProducer.py$随机产生一定量的数据
-* 然后运行$FinalTest.cpp$ ，输入BufferSize 和 LoserTree's Size就可以开始测试了
+* 首先运行 $DataProducer.py$ 随机产生一定量的数据
+* 然后运行 $FinalTest.cpp$  ，输入BufferSize 和 LoserTree's Size就可以开始测试了
 ## 补充
 * 本次实验的核心点在于 败者树数据结构的构建、多线程同步编程以及最终最优Merge Sequence的选取，所以最终找到Best Merge Sequence 后 并未进行Merge(懒)
 * 输入数据（待排序）在Input.txt中，最终生成的初始Run数据（未Merge）在Output.txt中
