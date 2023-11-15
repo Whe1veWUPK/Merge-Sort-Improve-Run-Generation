@@ -2,14 +2,32 @@
 #include "LoserTree.hpp"
 // constructor
 LoserTree::LoserTree(int* data, int size)
-{
-    this->size = size;
+{ 
+    if(size%2!=0){
+        this->size = size + 1;
+    }
+    else{
+        this->size = size;
+    }
+    int maxValue = (((1 << 30) - 1) * 2+1);
     this->invalidNum = 0;
     this->loserArray = new Info[2 * this->size];
     this->winnerArray = new Info[this->size];
     // initial the loser tree array
-    for (int i = 0; i < size; ++i) {
-        loserArray[i + size] = Info(data[i], i, true);
+    if(this->size==size){
+       for (int i = 0; i < this->size; ++i) {
+         loserArray[i + size] = Info(data[i], i, true);
+       }
+    }
+    else{
+       for (int i = 0; i < this->size;++i){
+         if(i!=this->size-1){
+         loserArray[i + this->size] = Info(data[i], i, true);
+         }
+         else{
+         loserArray[i + this->size] = Info(maxValue, i, false);
+         }
+       }
     }
     //do modify from bottom to up
     int curIndex = this->size - 1;
