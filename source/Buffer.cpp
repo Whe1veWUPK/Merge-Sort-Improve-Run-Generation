@@ -34,6 +34,11 @@ void Buffer::moveCurPos() {
     //更新curPos的函数
     this->curLocation += 1;
 }
+void Buffer::backCurPos(){
+    //回溯curPos的函数
+    this->curLocation -= 1;
+    --this->curSize;
+}
 int Buffer::getBufferSize() {
     return this->bufferSize;
 }
